@@ -1,15 +1,7 @@
 from rest_framework import viewsets
 
-from apps.vul_scan.models import UserSession, ScanTask
-from apps.vul_scan.serializers import UserSessionSerializer, ScanTaskSerializer
-
-
-class UserSessionViewSet(viewsets.ModelViewSet):
-    """
-    API endpoint that allows users to be viewed or edited.
-    """
-    queryset = UserSession.objects.all()
-    serializer_class = UserSessionSerializer
+from apps.vul_scan.models import ScanTask
+from apps.vul_scan.serializers import ScanTaskSerializer
 
 
 class ScanTaskViewSet(viewsets.ModelViewSet):

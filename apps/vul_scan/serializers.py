@@ -1,12 +1,6 @@
 from rest_framework import serializers
 
-from apps.vul_scan.models import UserSession, ScanTask
-
-
-class UserSessionSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = UserSession
-        fields = '__all__'
+from apps.vul_scan.models import ScanTask
 
 
 class ScanTaskSerializer(serializers.HyperlinkedModelSerializer):

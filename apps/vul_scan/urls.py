@@ -4,7 +4,6 @@ from apps.vul_scan import views
 from proj.urls import router
 
 
-router.register(r'sessions', views.UserSessionViewSet)
 router.register(r'tasks', views.ScanTaskViewSet)
 
 
