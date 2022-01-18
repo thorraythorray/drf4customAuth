@@ -12,7 +12,6 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 from datetime import timedelta
 import os
 from pathlib import Path
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -43,8 +42,6 @@ INSTALLED_APPS = [
 
     # 自定义app
     'apps.custom_auth',
-    'apps.docker_scan',
-    'apps.code_audit',
     'apps.vul_scan',
 ]
 
@@ -131,9 +128,6 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
-# STATICFILES_DIRS = [
-#     os.path.join(BASE_DIR, 'static')
-# ]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
@@ -148,19 +142,21 @@ CORS_ORIGIN_WHITELIST = []
 # 允许ajax请求携带cookie
 CORS_ALLOW_CREDENTIALS = True
 
-# 定义token的User表
+# must inherit from AbstractUsers (django)
 # AUTH_USER_MODEL = 'custom_auth.users'
 
 AUTHENTICATION_BACKENDS = (
-    'utils._auth.CustomAuthBackend',
+    'apps.custom_auth.authentication.CustomAuthBackend',
 )
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.IsAuthenticated'
+        # 'rest_framework.permissions.IsAuthenticated'
+        'apps.custom_auth.permissons.CustomIsAuthenticated'
     ],
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        # 'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'apps.custom_auth.authentication.CustomJWTAuthentication'
     ],
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 10,
@@ -173,5 +169,5 @@ SIMPLE_JWT = {
     'AUTH_HEADER_NAME': 'HTTP_AUTHORIZATION',
     'USER_ID_FIELD': 'id',
     'AUTH_HEADER_TYPES': ('Bearer', 'JWT'),
-    'USER_AUTHENTICATION_RULE': 'utils._auth._jwt_user_authentication_rule',
+    'USER_AUTHENTICATION_RULE': 'apps.custom_auth.authentication.custom_jwt_token_authentication_rule',  # authenicated only when get token
 }
