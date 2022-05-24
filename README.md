@@ -1,3 +1,3 @@
-#### Athenticate Customize Users Model usage of restframework-simplejwt module
+#### Customize athentication usage of restframework-simplejwt
 
 look up settings
