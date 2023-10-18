@@ -20,12 +20,12 @@ class CustomAuthBackend(BaseBackend):
             user = Users.objects.get(username=username)
         except Users.DoesNotExist:
             return None
-        
+
         return user
 
 
 class CustomJWTAuthentication(JWTAuthentication):
-    
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.user_model = Users
