@@ -137,6 +137,7 @@ CORS_ALLOW_CREDENTIALS = True
 # must inherit from AbstractUsers (django)
 # AUTH_USER_MODEL = 'custom_auth.users'
 
+# 登录验证，逐一验证有一个成功就行
 AUTHENTICATION_BACKENDS = (
     'apps.custom_auth.authentication.CustomAuthBackend',
 )
@@ -146,8 +147,9 @@ REST_FRAMEWORK = {
         # 'rest_framework.permissions.IsAuthenticated'
         'apps.custom_auth.permissons.CustomIsAuthenticated'
     ],
+    # 主要用于检验api的认证，此时不输入账号密码，需要验证jwt中的用户信息
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        # 'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
         'apps.custom_auth.authentication.CustomJWTAuthentication'
     ],
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
@@ -158,8 +160,10 @@ REST_FRAMEWORK = {
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(hours=2),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
-    'AUTH_HEADER_NAME': 'HTTP_AUTHORIZATION',
-    'USER_ID_FIELD': 'id',
-    'AUTH_HEADER_TYPES': ('Bearer', 'JWT'),
-    'USER_AUTHENTICATION_RULE': 'apps.custom_auth.authentication.custom_jwt_token_authentication_rule',  # authenicated only when get token
+    # 以下可选
+    # 'AUTH_HEADER_NAME': 'HTTP_AUTHORIZATION',
+    # 'USER_ID_FIELD': 'id',
+    # 'AUTH_HEADER_TYPES': ('Bearer', 'JWT'),  # Authorization: Bearer/JWT your-access-token
+    # 检验jwt取出的全部内容（时间戳，秘钥等）
+    # 'USER_AUTHENTICATION_RULE': 'rest_framework_simplejwt.authentication.default_user_authentication_rule',
 }
