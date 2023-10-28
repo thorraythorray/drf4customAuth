@@ -20,7 +20,7 @@ class Users(BaseDateTime):
     active = models.BooleanField('是否激活')
     level = models.SmallIntegerField('等级', choices=USER_PERMISSION_LEVEL, default=6)
     password = models.CharField('密码', max_length=128)
-    
+
     EMAIL_FIELD = 'email'
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = ['email']

@@ -135,7 +135,9 @@ CORS_ORIGIN_WHITELIST = []
 CORS_ALLOW_CREDENTIALS = True
 
 # must inherit from AbstractUsers (django)
-# AUTH_USER_MODEL = 'custom_auth.users'
+
+# 登录时验证的自定义的user表名，需要注意在表中定义字段USERNAME_FIELD，django会找到该user
+AUTH_USER_MODEL = 'custom_auth.users'
 
 # 登录验证，逐一验证有一个成功就行
 AUTHENTICATION_BACKENDS = (
@@ -165,5 +167,20 @@ SIMPLE_JWT = {
     # 'USER_ID_FIELD': 'id',
     # 'AUTH_HEADER_TYPES': ('Bearer', 'JWT'),  # Authorization: Bearer/JWT your-access-token
     # 检验jwt取出的全部内容（时间戳，秘钥等）
-    # 'USER_AUTHENTICATION_RULE': 'rest_framework_simplejwt.authentication.default_user_authentication_rule',
+    'USER_AUTHENTICATION_RULE': 'rest_framework_simplejwt.authentication.default_user_authentication_rule',
+}
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'root': {
+        'handlers': ['console'],
+        'level': 'INFO',
+    },
 }
